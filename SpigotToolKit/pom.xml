@@ -21,16 +21,17 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <custom.outputDirectory></custom.outputDirectory>
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
       <version>1.8.8-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
-
 
     <dependency>
       <groupId>com.google.code.gson</groupId>
@@ -39,21 +40,21 @@
     </dependency>
 
     <dependency>
-      <groupId>com.fasterxml.jackson.dataformat</groupId>
-      <artifactId>jackson-dataformat-yaml</artifactId>
-      <version>2.13.0</version>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>2.0</version>
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <version>2.17.1</version>
     </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>RELEASE</version>
+      <version>5.8.0</version> <!-- Specify the concrete version here -->
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -61,13 +62,11 @@
   <build>
     <pluginManagement>
       <plugins>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
           <version>3.6.0</version>
           <configuration>
-            <!-- see http://jira.codehaus.org/browse/MNG-5346 -->
             <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
           </configuration>
         </plugin>
@@ -88,19 +87,17 @@
           <target>11</target>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
         <version>3.0.0-M1</version>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.2.0</version>
         <configuration>
-          <outputDirectory>D:\Minecraft Development\api</outputDirectory>
+          <outputDirectory>${custom.outputDirectory}</outputDirectory>
         </configuration>
       </plugin>
     </plugins>

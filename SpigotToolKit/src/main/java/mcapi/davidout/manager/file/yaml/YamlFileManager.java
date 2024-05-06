@@ -4,9 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import mcapi.davidout.manager.file.CouldNotCreateFileException;
 import mcapi.davidout.manager.file.IFileManager;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class YamlFileManager implements IFileManager {
 
@@ -24,8 +25,8 @@ public class YamlFileManager implements IFileManager {
         boolean created = baseFolder.mkdirs();
     }
 
-    public String formatPath(String filePath) {
-        File file = new File(filePath);
+    public String formatPath(String path) {
+        File file = new File(path);
         String fileName = file.getName();
         int dotIndex = fileName.lastIndexOf('.');
         String extension = (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
@@ -36,18 +37,24 @@ public class YamlFileManager implements IFileManager {
 
     @Override
     public <T> T loadFile(Class<T> fileClass, String path) throws IOException {
-        return objectMapper.readValue(new File(formatPath(path) ), fileClass);
+        return objectMapper.readValue(new File(formatPath(path)), fileClass);
     }
 
     @Override
     public <T> boolean saveFile(T fileObject, String path) throws IOException {
-        objectMapper.writeValue(new File(formatPath(path) ), fileObject);
+        objectMapper.writeValue(new File(formatPath(path)), fileObject);
         return true;
+    }
+
+    private DumperOptions getOptions() {
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK); // Customize the flow style
+        return options;
     }
 
     @Override
     public boolean deleteFile(String path) {
-        File file = new File(formatPath(path) );
+        File file = new File(formatPath(path));
         return file.delete();
     }
 
@@ -55,4 +62,5 @@ public class YamlFileManager implements IFileManager {
     public File getBaseFolder() {
         return this.baseFolder;
     }
+
 }

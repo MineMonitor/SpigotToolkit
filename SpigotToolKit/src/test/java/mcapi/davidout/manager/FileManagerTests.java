@@ -54,6 +54,7 @@ public class FileManagerTests {
         // Test saveFile and loadFile methods
         String yamlFilePath = "test-folder/test";
         assertTrue(yamlFileManager.saveFile(testObject, yamlFilePath));
+
         TestObject loadedObject = yamlFileManager.loadFile(TestObject.class, yamlFilePath);
         assertEquals(testObject, loadedObject);
 

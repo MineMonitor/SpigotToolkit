@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-import static org.junit.Assert.assertTrue;
 
 public class LanguageManagerTests {
 
