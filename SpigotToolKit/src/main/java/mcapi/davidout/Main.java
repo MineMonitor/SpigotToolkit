@@ -6,32 +6,23 @@ import mcapi.davidout.manager.file.yaml.YamlFileManager;
 import mcapi.davidout.manager.language.MessageManager;
 import mcapi.davidout.manager.language.bundle.MessageBundle;
 import mcapi.davidout.manager.language.message.MessageKey;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class Main {
+public class Main extends JavaPlugin {
 
-
-    public static void main(String[] args) throws IOException {
-        Config config = new Config("test", "1.0.0", 10);
-        File file = new File("test-folder");
-        file.mkdirs();
-
-
-        JsonFileManager fileManager = new JsonFileManager(file);
-        MessageManager manager = new MessageManager(fileManager);
-        manager.loadMessageBundles();
-        manager.setCurrentBundle("de");
-        manager.addMessageBundle(getBundle());
-        System.out.println(manager.getBundles().size());
-
-        System.out.println(manager.getMessage("onEnable"));
-
-
+    @Override
+    public void onEnable() {
 
     }
+
+
+
 
     public static MessageBundle getBundle() {
         HashMap<String, String> messages = new HashMap<>();

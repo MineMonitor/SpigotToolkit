@@ -44,9 +44,9 @@ public class MessageManager implements IMessageManager {
 
     @Override
     public void setCurrentBundle(String bundleName) {
-        Optional<IMessageBundle> bundle = messageBundles.stream().filter(iMessageBundle -> iMessageBundle.getName().equalsIgnoreCase(bundleName)).findFirst();
-        if(bundle.isEmpty()) return;
-        this.currentBundle = bundle.get();
+        IMessageBundle bundle = messageBundles.stream().filter(iMessageBundle -> iMessageBundle.getName().equalsIgnoreCase(bundleName)).findFirst().orElse(null);
+        if(bundle == null) return;
+        this.currentBundle = bundle;
     }
 
 
