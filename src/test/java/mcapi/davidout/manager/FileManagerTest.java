@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FileManagerTests {
+public class FileManagerTest {
 
     private JsonFileManager jsonFileManager;
     private YamlFileManager yamlFileManager;

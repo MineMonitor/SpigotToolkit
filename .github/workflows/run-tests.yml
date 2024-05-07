@@ -6,7 +6,7 @@ on:
       - '*'  # Run on every branch push
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +17,9 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: '8' # Use Java 8
 
       - name: Build with Maven
-        run: mvn -B clean verify
-
-      - name: Run all JUnit tests in a package
-        run: mvn -Dtest=mcapi.davidout.manager.* test
+        run: |
+          mvn -B clean verify
+          mvn -Dtest=mcapi.davidout.* test

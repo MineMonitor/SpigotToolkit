@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 
-public class LanguageManagerTests {
+public class LanguageManagerTest {
 
     private File baseFolder;
     private IFileManager fileManager;
