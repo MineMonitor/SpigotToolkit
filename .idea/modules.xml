@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SpigotToolkit.iml" filepath="$PROJECT_DIR$/.idea/SpigotToolkit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpigotToolKit.iml" filepath="$PROJECT_DIR$/SpigotToolKit.iml" />
     </modules>
   </component>
 </project>
