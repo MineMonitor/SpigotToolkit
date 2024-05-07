@@ -1,71 +1,57 @@
 package mcapi.davidout.manager.gui;
 
-import mcapi.davidout.utils.TextUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.List;
-import java.util.regex.Pattern;
+import java.util.*;
 
-public class GuiManager implements IGuiManager, EventListener {
+public class GuiManager implements IGuiManager, Listener {
 
-    private List<IGui> guis;
-    private Pattern VARIABLE_PATTERN;
-
+    private final List<IGui> guis;
     public GuiManager() {
         this.guis = new ArrayList<>();
-        this.VARIABLE_PATTERN = Pattern.compile("\\{\\w+\\}");
+    }
+
+
+    @Override
+    public void registerGui(IGui gui) {
+        this.guis.add(gui);
     }
 
     @Override
     public List<IGui> getGuis() {
-        return guis;
+        return this.guis;
     }
+
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        Inventory clickedInvetory = e.getClickedInventory();
-        HumanEntity entity = e.getWhoClicked();
-
-        if (entity.getOpenInventory().getTopInventory().equals(entity.getInventory())) {
+        if(e.getView().getTopInventory() == null) {
             return;
         }
 
-        IGui gui = guis.stream().filter(iGui -> namesMatch(
-                formatTitle(    iGui.getTitle() ),
-                formatTitle(    clickedInvetory.getTitle()  )
-                )
-        ).findFirst().orElse(null);
+        Inventory topInventory = e.getView().getTopInventory();
+        if (!(topInventory.getHolder() instanceof GuiHolder)) {
+            return; // or handle the case when the holder is not a GuiHolder
+        }
 
-        if(gui == null) {
+        GuiHolder holder = (GuiHolder) topInventory.getHolder();
+        IGui openGui = this.guis.stream().filter(gui ->
+                gui.getUUID().equals(holder.getInventoryUUID())
+        ).findFirst()
+                .orElse(null);
+
+        if(openGui == null) {
             return;
         }
 
-        this.openInventory(entity, gui);
+
+        openGui.onClick(e);
     }
 
-    private String formatTitle(String title) {
-        return TextUtils.formatColorCodes(title);
-    }
 
-    private boolean namesMatch(String originalName, String nameToCheck) {
-        List<Integer> variableIndexes = TextUtils.getVariableIndexes(originalName, VARIABLE_PATTERN);
 
-        return TextUtils.removeVariables(
-                variableIndexes, originalName
-        ).equals(
-                TextUtils.removeVariables(
-                        variableIndexes, nameToCheck
-                )
-        );
-    }
 
-    private void openInventory(HumanEntity entity, IGui gui) {
-        Inventory inv = Bukkit.createInventory(null, gui.getRows() * 9, formatTitle(gui.getTitle()));
-    }
 }
