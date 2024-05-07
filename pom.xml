@@ -24,8 +24,8 @@
 
   <repositories>
     <repository>
-      <id>spigotmc-repo</id>
-      <url>https://repository.spigotmc.org/repository/maven-public/</url>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
   </repositories>
 
