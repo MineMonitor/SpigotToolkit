@@ -71,9 +71,16 @@ public class MessageManager implements IMessageManager {
             return "No bundle selected";
         }
 
-        return
-                bundle.getMessages().entrySet().stream().
-                filter(entry -> entry.getKey().equalsIgnoreCase(key)).findFirst().map(Map.Entry::getValue).orElse("&cCould not find the message.");
+        return TextUtils.formatColorCodes(
+                        bundle.getMessages().entrySet().stream().
+                                filter(
+                                        entry -> entry.getKey().equalsIgnoreCase(key)
+                                ).findFirst()
+                                .map(Map.Entry::getValue)
+                                .orElse("&cCould not find the %message.".replace("%message", key))
+
+                   .replace("%prefix", bundle.getPrefix())
+                );
     }
 
     @Override
@@ -116,14 +123,11 @@ public class MessageManager implements IMessageManager {
                         .findFirst();
 
                 existingBundle.ifPresent(bundle -> {
-                    System.out.println("Removing existing bundle: " + bundle.getName());
                     messageBundles.remove(bundle);
                 });
 
-                System.out.println("Adding new bundle: " + bundleName);
-                messageBundles.add(new MessageBundle(bundleName, messages));
+                messageBundles.add(new MessageBundle(bundleName, messages, savedBundle.prefix));
             } catch (IOException e) {
-                System.err.println("Error loading message bundles: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -136,7 +140,7 @@ public class MessageManager implements IMessageManager {
     public boolean saveMessageBundles()  {
         for (IMessageBundle bundle : this.messageBundles) {
             try {
-                fileManager.saveFile(new SavedBundle(bundle.getName(), bundle.getMessages()), bundle.getName());
+                fileManager.saveFile(new SavedBundle(bundle.getName(), bundle.getMessages(), bundle.getPrefix()), bundle.getName());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 return false;

@@ -10,6 +10,10 @@ import java.util.regex.Pattern;
 public class TextUtils {
 
     public static String formatColorCodes(String textToFormat) {
+        if(textToFormat == null) {
+            return "";
+        }
+
         return ChatColor.translateAlternateColorCodes('&', textToFormat);
     }
 

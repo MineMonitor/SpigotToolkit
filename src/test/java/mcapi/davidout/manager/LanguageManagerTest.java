@@ -58,6 +58,6 @@ public class LanguageManagerTest {
         HashMap<String, String> messages = new HashMap<>();
         messages.put("onEnable", "This plugin enabled");
         messages.put("onDisable", "This plugin disabled");
-        return new MessageBundle("en", messages);
+        return new MessageBundle("en", messages, "");
     }
 }

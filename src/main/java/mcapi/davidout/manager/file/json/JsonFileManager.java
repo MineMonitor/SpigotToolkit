@@ -36,6 +36,10 @@ public class JsonFileManager implements IFileManager {
 
     @Override
     public <T> boolean saveFile(T fileObject, String path) throws IOException {
+        if(fileObject == null) {
+            return false;
+        }
+
         try (FileWriter writer = new FileWriter(formatPath(path)  )) {
             gson.toJson(fileObject, writer);
         }

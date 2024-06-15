@@ -42,6 +42,10 @@ public class YamlFileManager implements IFileManager {
 
     @Override
     public <T> boolean saveFile(T fileObject, String path) throws IOException {
+        if(fileObject == null) {
+            return false;
+        }
+
         objectMapper.writeValue(new File(formatPath(path)), fileObject);
         return true;
     }
