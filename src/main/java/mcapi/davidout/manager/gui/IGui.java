@@ -2,6 +2,7 @@ package mcapi.davidout.manager.gui;
 
 import mcapi.davidout.utils.TextUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -44,7 +45,14 @@ public abstract class IGui {
   }
 
   public void fillInventory(Inventory inventory, ItemStack itemStack) {
+    fillInventory(inventory, itemStack, true);
+  }
+
+  public void fillInventory(Inventory inventory, ItemStack itemStack, boolean ignoreItems) {
     for(int i = 0; i < (this.getRows() * 9); i++) {
+      if(!ignoreItems && inventory.getItem(i) != null && inventory.getItem(i).getType() != Material.AIR) {
+        continue;
+      }
       inventory.setItem(i, itemStack);
     }
   }

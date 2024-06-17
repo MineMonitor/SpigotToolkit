@@ -89,5 +89,23 @@ public class ItemCreator {
                , displayName, lore);
     }
 
+    public static Material getTypeItem(String materialName, String legacyMaterialName) {
+        return (ServerUtils.versionLowerThan("1.13")) ? Material.getMaterial(legacyMaterialName) : Material.getMaterial(materialName);
+    }
+
+   public static ItemStack getTypeItem(String materialName, String legacyMaterialName, int number) {
+        Material mat = getTypeItem(materialName, legacyMaterialName);
+       return (ServerUtils.versionLowerThan("1.13")) ? new ItemStack(mat, 1, (short) number) : new ItemStack(mat);
+   }
+
+    public static ItemStack getTypeItem(Material material, String legacyMaterialName, int number) {
+        return getTypeItem(material.name(), legacyMaterialName, number);
+    }
+
+    public static ItemStack getTypeItem(String materialName, Material legacyMaterial, int number) {
+        return getTypeItem(materialName, legacyMaterial.name(), number);
+    }
+
+
 
 }

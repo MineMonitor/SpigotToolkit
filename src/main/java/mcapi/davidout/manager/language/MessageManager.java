@@ -77,7 +77,7 @@ public class MessageManager implements IMessageManager {
                                         entry -> entry.getKey().equalsIgnoreCase(key)
                                 ).findFirst()
                                 .map(Map.Entry::getValue)
-                                .orElse("&cCould not find the %message.".replace("%message", key))
+                                .orElse("&cCould not find the message: %message.".replace("%message", key))
 
                    .replace("%prefix", bundle.getPrefix())
                 );
